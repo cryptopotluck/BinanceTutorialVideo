@@ -7,7 +7,8 @@ import keys
 def binance_price():
     client = Client(api_key=keys.Pkey, api_secret=keys.Skey)
 
-    candles = client.get_klines(symbol='LTCUSDT', interval=Client.KLINE_INTERVAL_1HOUR)
+    candles = client.get_klines(
+        symbol='LTCUSDT', interval=Client.KLINE_INTERVAL_1HOUR)
 
     candles_data_frame = df(candles)
 
@@ -16,7 +17,9 @@ def binance_price():
     final_date = []
 
     for time in candles_data_frame_date.unique():
-        readable = datetime.fromtimestamp(int(time/1000))
+        readable = datetime.fromtimestamp(
+            int(time / 1000))
+
         final_date.append(readable)
 
     candles_data_frame.pop(0)
@@ -30,9 +33,16 @@ def binance_price():
 
     final_dataframe.set_index('date', inplace=True)
 
-    final_dataframe.columns = ['open', 'high', 'low', 'close', 'volume', 'close_time', 'asset_volume', 'trade_number', 'taker_buy_base', 'taker_buy_quote']
+    final_dataframe.columns = [
+        'open',
+        'high',
+        'low',
+        'close',
+        'volume',
+        'close_time',
+        'asset_volume',
+        'trade_number',
+        'taker_buy_base',
+        'taker_buy_quote']
+
     return final_dataframe
-
-
-
-
